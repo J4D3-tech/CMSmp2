@@ -1,0 +1,47 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "login": true,
+  "steps": [
+    {
+      "step": "setSiteLanguage",
+      "language": "pl_PL"
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "wordpress.org/themes",
+        "slug": "twentytwentyfive"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "contact-form-7"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "Bistro Przy Stole",
+        "blogdescription": "Dobre jedzenie, dobry czas przy stole",
+        "permalink_structure": "/%postname%/"
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nrequire '/wordpress/wp-load.php';\n$pages = [\n ['start','Start','Witamy w fikcyjnym Bistro Przy Stole. Zobacz przykładowe menu.'],\n ['menu','Menu','Krem pomidorowy 19 zł, makaron z warzywami 36 zł, kurczak 42 zł. Ceny i skład są fikcyjne.'],\n ['rezerwacje','Rezerwacje','Demonstracja zapytania o stolik. Brak rzeczywistej rezerwacji.'],\n ['o-nas','O nas','Jesteśmy fikcyjną restauracją stworzoną na potrzeby MP1.'],\n ['aktualnosci','Aktualności','Nowości i inspiracje z bistro.'],\n ['kontakt','Kontakt','Projekt edukacyjny: kontakt@bistro-przy-stole.example'],\n ['polityka-prywatnosci','Polityka prywatności','Projekt edukacyjny. Nie podawaj prawdziwych danych osobowych.'],\n ['faq','FAQ','Czy stolik można zarezerwować? Nie, to tylko demonstracja.']\n];\nforeach ($pages as $i => $p) {\n $found = get_page_by_path($p[0], OBJECT, 'page');\n if (!$found) {\n  $text = '<!-- wp:paragraph --><p>' . esc_html($p[2]) . '</p><!-- /wp:paragraph -->';\n  $id = wp_insert_post(['post_type'=>'page','post_status'=>'publish','post_name'=>$p[0], 'post_title'=>$p[1], 'post_content'=>$text]);\n } else { $id=$found->ID; }\n if ($i===0) {$front=$id;} if ($p[0]==='aktualnosci') {$news=$id;}\n}\nupdate_option('show_on_front','page'); update_option('page_on_front',$front); update_option('page_for_posts',$news);\nforeach (['Nowości','Kulinarne inspiracje'] as $name) { if (!term_exists($name,'category')) wp_insert_term($name,'category'); }\n$examples = [\n ['przykladowe-menu-na-jesien','Przykładowe menu na jesień','Nowości'],\n ['jak-wybrac-lunch','Jak wybrać lunch w krótkiej przerwie','Kulinarne inspiracje'],\n ['spotkanie-przy-stole','Pomysł na spokojne spotkanie przy stole','Kulinarne inspiracje']\n];\nforeach ($examples as $p) {\n if (!get_page_by_path($p[0],OBJECT,'post')) {\n  $term=get_term_by('name',$p[2],'category');\n  wp_insert_post(['post_type'=>'post','post_status'=>'publish','post_name'=>$p[0],'post_title'=>$p[1],\n   'post_content'=>'<!-- wp:paragraph --><p>Przykładowy wpis Bistro Przy Stole (szkic AI).</p><!-- /wp:paragraph -->',\n   'post_category'=>[$term->term_id]]);\n }\n}\n$hello=get_page_by_path('hello-world',OBJECT,'post');\nif ($hello && $hello->post_title==='Hello world!') wp_delete_post($hello->ID,true);\n"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+/*
+Theme Name: MF Child — Bistro Przy Stole
+Template: twentytwentyone
+Description: Klasyczny motyw potomny Twenty Twenty-One — MP2 L5, ta sama restauracja.
+Author: Projekt edukacyjny CMS
+Version: 1.0.0
+Requires at least: 6.6
+Requires PHP: 7.4
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: mf-child
+*/
+:root { --mf-accent: #85351f; --mf-light: #fffaf3; --mf-dark: #29231f; }
+a { color: var(--mf-accent); }
+.site-title, .entry-title, h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
+.site-header, .site-footer { background: var(--mf-light); }
+.mf-o-nas { border-left: 5px solid var(--mf-accent); padding-inline: clamp(1rem,3vw,2rem); }
+.mf-o-nas .mf-lead { font-size: clamp(1.1rem, 1rem + .6vw, 1.4rem); }
+.mf-o-nas .entry-title { color: var(--mf-dark); }
+.mf-note { background: #f6e5d1; border-left: 5px solid var(--mf-accent); padding: 1rem 1.25rem; color: var(--mf-dark); }
+.wp-block-button.is-style-mf-cien .wp-block-button__link { background: var(--mf-accent); color: #fff; box-shadow: 0 5px 0 #442016; border-radius: 8px; }
+.wp-block-group.is-style-mf-karta { padding: 1.5rem; border: 2px solid #b8957f; border-radius: 14px; background: #fffaf3; color: var(--mf-dark); }
+.mf-child-footer-info { margin: 1rem 0; }
+.mf-info-firmy { border-left: 3px solid var(--mf-accent); padding: .6rem 1rem; }
+.mf-info-firmy p { margin: .25rem 0; }
+.mf-info-firmy a { color: var(--mf-accent); }
+.mf-cta-row { margin: 1.5rem 0; }
+:where(a, button, input, textarea, select):focus-visible { outline: 3px solid var(--mf-accent) !important; outline-offset: 3px; }
+@media (max-width: 600px) { .mf-o-nas { padding-inline: 1rem; } .mf-o-nas .entry-content { padding-inline: 0; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+@media (forced-colors: active) { .is-style-mf-karta { border-color: CanvasText !important; } }

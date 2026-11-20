@@ -1,0 +1,102 @@
+/*
+Theme Name: Bistro Przy Stole
+Description: Samodzielny motyw blokowy dla projektu MP2 L4; zgodny z treścią MP1.
+Author: Projekt edukacyjny CMS
+Version: 0.2.0
+Requires at least: 6.6
+Requires PHP: 8.0
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: bistro-przy-stole
+Tags: full-site-editing, block-patterns, custom-colors
+*/
+
+:root { color-scheme: light; }
+html { scroll-padding-top: 1.5rem; }
+body { overflow-wrap: anywhere; }
+/* Jeden widoczny fokus dla nawigacji, CTA i formularzy. */
+:where(a, button, input, textarea, select, summary):focus-visible {
+  outline: 3px solid #85351f !important;
+  outline-offset: 4px;
+}
+
+.mp1-site-header { border-bottom: 1px solid #e9d7c4; background: #fff; }
+.mp1-site-header > .wp-block-group { gap: 1rem; padding-block: 1.15rem; }
+.mp1-site-header .wp-block-site-title { font-weight: 800; letter-spacing: -.035em; font-size: 1.25rem; }
+.mp1-site-header .wp-block-site-title a { text-decoration: none; }
+.mp1-site-header .wp-block-navigation-item__content { padding: .7rem .45rem; }
+.wp-block-navigation-item__content,
+.wp-block-navigation__responsive-container-open,
+.wp-block-navigation__responsive-container-close,
+.wp-block-button__link,
+.wpcf7-submit {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.wp-block-navigation__responsive-container-close { justify-content: flex-start; }
+
+.mp1-main { padding-block: clamp(1.4rem, 2vw, 2.5rem) 4rem; }
+.mp1-main > * { max-width: min(100% - 2rem, 1080px); margin-inline: auto; }
+.mp1-hero { border-radius: 24px; overflow: hidden; color: var(--wp--preset--color--contrast, #29231f) !important; padding: clamp(2rem, 5vw, 4.5rem); }
+.mp1-hero .wp-block-cover__inner-container { width: 100%; }
+.mp1-hero h1, .mp1-hero h2 { max-width: 18ch; line-height: 1.08; letter-spacing: -.04em; }
+.mp1-hero p { max-width: 52ch; }
+.mp1-section { margin-block: clamp(2.25rem, 5vw, 4rem); }
+.mp1-card { color: #29231f; padding: 1.5rem; border: 1px solid #e7d7c7; border-radius: 16px; background: #fff; height: 100%; }
+.mp1-card h3 { margin-top: 0; }
+.mp1-quote { padding: 1.2rem 1.6rem; border-inline-start: 5px solid #85351f; background: #f8eddf; border-radius: 0 14px 14px 0; }
+.mp1-quote cite { font-size: .875rem; font-style: normal; }
+.mp1-note { font-size: .925rem; color: #534436; }
+.mp1-site-footer { border-top: 1px solid #e9d7c4; padding-block: 2rem; background: #f8eddf; }
+.mp1-site-footer a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.mp1-post-card { padding: 1.25rem 0; border-bottom: 1px solid #e9d7c4; }
+.mp1-post-card .wp-block-post-title { margin: 0; }
+.wp-block-button__link { border-radius: 9px !important; font-weight: 700; padding: .9rem 1.4rem; }
+.wpcf7 form { max-width: 36rem; }
+.wpcf7 label { display: block; font-weight: 600; margin-block: 1rem .45rem; }
+.wpcf7 input:not([type='checkbox']):not([type='submit']),
+.wpcf7 textarea { box-sizing: border-box; display: block; margin-top: .35rem; width: 100%; max-width: 100%; min-height: 44px; border: 2px solid #6c5245; border-radius: 8px; padding: .65rem; font: inherit; background: white; color: #29231f; }
+.wpcf7 textarea { min-height: 9rem; }
+.wpcf7 input[type='checkbox'] { inline-size: 20px; block-size: 20px; accent-color: #85351f; }
+.wpcf7 input[type='submit'] { background: #85351f; color: #fff; padding: .75rem 1.2rem; border: 2px solid #85351f; border-radius: 9px; font-weight: 700; cursor: pointer; }
+.wpcf7-not-valid-tip { font-weight: 600; color: #9a1d1d; }
+.skip-link:focus { position: fixed !important; top: 1rem; left: 1rem; z-index: 10000; padding: .9rem 1.2rem; background: white; color: #29231f; }
+
+/* Skip link działa jako pierwszy element nawigacji klawiaturą. */
+.mp1-skip-link {
+  position: absolute; left: 1rem; top: 0; z-index: 10000;
+  transform: translateY(-200%); background: #fff; color: #29231f;
+  padding: .8rem 1.2rem; border-radius: 8px; border: 2px solid #29231f;
+}
+.mp1-skip-link:focus-visible { transform: none; position: fixed; top: .75rem; }
+/* Layout mobilny; Gutenberg sam układa kolumny w stos. */
+@media (max-width: 600px) {
+  .mp1-hero { padding: 1.5rem; border-radius: 16px; min-height: auto !important; }
+  .mp1-site-header > .wp-block-group { padding-block: .75rem; }
+  .mp1-main { padding-block: 1rem 3rem; }
+  .wp-block-columns { gap: 1rem; }
+  .mp1-card { color: #29231f; padding: 1.1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+@media (forced-colors: active) {
+  .wp-block-button__link, .wpcf7 input[type='submit'] { border: 2px solid ButtonText; }
+  :where(a, button, input, textarea, select, summary):focus-visible { outline-color: Highlight !important; }
+}
+
+/* Menu restauracji: czytelny układ cen i opisów bez tabel na telefonie. */
+.mp1-menu-price { font-weight: 800; color: #85351f; }
+.mp1-service-columns .wp-block-column { min-width: min(100%, 220px); }
+
+/* MP2/L4: wariant ciemny. Paleta zmienia globalne tło/tekst, a karty mają
+   własne jasne tło i ciemny tekst dla czytelności niezależnie od wariantu. */
+.mp1-site-header { color: #29231f; }
+.mp1-site-header a { color: #85351f; }
+.mp1-site-footer { color: #29231f; }
+.mp1-quote { color: #29231f; }
+.mp1-note { background: #f6e5d1; color: #29231f; padding: .5rem 1rem; }
+.mp1-card a, .mp1-quote a, .mp1-site-footer a { color: #85351f; }

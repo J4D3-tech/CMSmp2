@@ -1,0 +1,60 @@
+# MP1 — uruchamiane w GitHub Codespaces, port 8080.
+services:
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wp
+      MARIADB_PASSWORD: ${DB_PASSWORD:?Uruchom bash scripts/start.sh}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Uruchom bash scripts/start.sh}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  wordpress:
+    image: wordpress:php8.3-apache
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    environment: &wp_environment
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:?Uruchom bash scripts/start.sh}
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        // GitHub Codespaces proxy HTTPS -> Apache HTTP.
+        if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($$_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
+          $$_SERVER['HTTPS'] = 'on';
+        }
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./theme/bistro-przy-stole:/opt/mp1-theme:rw
+      - ./theme/mf-child:/opt/mp2-child:ro
+  cli:
+    image: wordpress:cli-php8.3
+    profiles: ["tools"]
+    user: "33:33"
+    entrypoint: ["wp"]
+    depends_on:
+      db:
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    environment:
+      <<: *wp_environment
+      HOME: /tmp
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./theme/bistro-przy-stole:/opt/mp1-theme:rw
+      - ./theme/mf-child:/opt/mp2-child:ro
+      - ./scripts/seed.php:/work/seed.php:ro
+volumes:
+  wordpress_data:
+  db_data:

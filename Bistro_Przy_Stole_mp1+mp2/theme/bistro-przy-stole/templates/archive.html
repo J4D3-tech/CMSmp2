@@ -1,0 +1,10 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","area":"header"} /-->
+<!-- wp:group {"tagName":"main","anchor":"main-content","className":"mp1-main","layout":{"type":"constrained"}} -->
+<main id="main-content" class="wp-block-group mp1-main"><!-- wp:heading {"level":1} --><h1 class="wp-block-heading">Archiwum Bistro Przy Stole</h1><!-- /wp:heading -->
+<!-- wp:paragraph --><p>Lista wpisów i kategorii z naszego fikcyjnego bistro.</p><!-- /wp:paragraph -->
+<!-- wp:query {"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":true}} -->
+<div class="wp-block-query"><!-- wp:post-template -->
+<!-- wp:group {"className":"mp1-post-card"} --><div class="wp-block-group mp1-post-card"><!-- wp:post-title {"isLink":true,"level":2} /--><!-- wp:post-date /--><!-- wp:post-excerpt {"moreText":"Czytaj dalej"} /--></div><!-- /wp:group -->
+<!-- /wp:post-template --><!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} --><!-- wp:query-pagination-previous /--><!-- wp:query-pagination-numbers /--><!-- wp:query-pagination-next /--><!-- /wp:query-pagination --><!-- wp:query-no-results --><!-- wp:paragraph --><p>Nie ma jeszcze wpisów.</p><!-- /wp:paragraph --><!-- /wp:query-no-results --></div><!-- /wp:query --></main>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer","area":"footer"} /-->
